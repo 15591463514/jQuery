@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>键盘的相关事件</title>
+    <script src="jquery-3.4.1.js"></script>
+</head>
+<body>
+
+<h2>松开变色（keyup）</h2>
+<input id="input1" type="text">
+<h2>按下变色（keydown）</h2>
+<input id="input2" type="text">
+<h2>按下变色（keypress）</h2>
+<input id="input3" type="text">
+<p>区别：keydown：用户在键盘上按下某按键是发生。一直按着某按键则会不断触发（opera浏览器除外）。
+    keypress：用户按下一个按键，并产生一个字符时发生（也就是不管类似shift、alt、ctrl之类的键，就是说用户按了一个能在屏幕上输出字符的按键keypress事件才会触发）。一直按着某按键则会不断触发。
+    keyup：用户释放某一个按键是触发。</p>
+<h4>你已经输入了<span id="span1">0</span>字符，你还可以输入<span id="span2">50<span>个字符</h4>
+<input id="input4" type="text">
+<script>
+
+
+    /*实现打字，输入框变色功能*/
+
+    //rgba颜色模式
+    $("#input1").keyup(function () {
+
+        //如何获取rgb值（0-255的随机数字）：
+        var r = 0, g = 0, b = 0;
+        r = Math.round(Math.random() * 254) + 1;
+        g = Math.round(Math.random() * 254) + 1;
+        b = Math.round(Math.random() * 254) + 1;
+        var input_color1 = "rgba(" + r + "," + g + "," + b + ",50%)";
+        console.log(input_color1);
+
+        $("#input1").css("background-color", input_color1);
+    });
+
+    //十六进制颜色模式：
+    $("#input2").keydown(function () {
+
+        //获取十六进制随机数：
+        var A = (Math.round(Math.random() * 15)).toString(16);
+        var B = (Math.round(Math.random() * 15)).toString(16);
+        var C = (Math.round(Math.random() * 15)).toString(16);
+        var D = (Math.round(Math.random() * 15)).toString(16);
+        var E = (Math.round(Math.random() * 15)).toString(16);
+        var F = (Math.round(Math.random() * 15)).toString(16);
+        var input_color2 = "#" + A + B + C + D + E + F;
+        console.log(input_color2);
+
+        $("#input2").css("background-color", input_color2);
+    });
+
+    $("#input3").keypress(function () {
+
+        //获取十六进制随机数：
+        var A = (Math.round(Math.random() * 15)).toString(16);
+        var B = (Math.round(Math.random() * 15)).toString(16);
+        var C = (Math.round(Math.random() * 15)).toString(16);
+        var D = (Math.round(Math.random() * 15)).toString(16);
+        var E = (Math.round(Math.random() * 15)).toString(16);
+        var F = (Math.round(Math.random() * 15)).toString(16);
+        var input_color2 = "#" + A + B + C + D + E + F;
+        console.log(input_color2);
+
+        $("#input3").css("background-color", input_color2);
+    });
+
+
+    var i = 0, j = 50;
+    $("#input4").keypress(function () {
+
+        $("#span1").text(i += 1);
+        $("#span2").text(j -= 1);
+
+        if (i === 50) {
+            $("#input4").unbind("keypress");
+            //取消input4 的 keydown 绑定事件；
+
+        }
+    });
+
+
+</script>
+
+</body>
+</html>

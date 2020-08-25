@@ -1,0 +1,254 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>请假app调试代码</title>
+    <!-- 这个是在线的jQuery库，需要联网使用 -->
+    <!--<script src="http://libs.baidu.com/jquery/1.7.0/jquery.min.js"></script>-->
+    <!-- 这个是本地的jQuery库，路径不能有错误 -->
+    <script src="jquery-3.4.1.js"></script>
+    <style type="text/css">
+
+        * {
+            margin-left: 20px;
+        }
+
+        #p1 {
+            width: 500px;
+            height: 40px;
+            text-align: center;
+            margin: 60px auto 0;
+            font-size: 30px;
+            padding: 20px;
+            background-color: blue;
+        }
+
+        #login {
+            height: 40px;
+            width: 300px;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            background-image: linear-gradient(135deg, #69FF97 10%, #00E4FF 100%);
+        }
+
+        #login:focus {
+            outline: -webkit-focus-ring-color auto 0;
+            /*浏览器默认样式，给login按钮在选中状态后加了边框，将1px改为0取消边框*/
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        h3 {
+            margin: 20px;
+            border: black 2px solid;
+        }
+
+        #btn1 {
+            width: 60px;
+            height: 100px;
+            background-color: burlywood;
+            margin: 10px auto;
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+<h2>焦点事件：</h2>
+<h4>hover( )</h4>
+<p id="p1">把鼠标移过来，看看会有什么变化</p>
+
+<!--！！！！！！！！！！暂定为疑难问题，后续解决！！！！！！！！！！！-->
+<h4>change( )</h4>
+<button class="change">change</button>
+<input class="change" type="text">
+
+<h4>blur( )</h4>
+<button class="blur">blur</button>
+<input class="blur" type="text">
+
+<h4>focus( )</h4>
+<p><input type="text" id="btn4"></p>
+<p><input type="number"></p>
+
+<h4>focusin( )</h4>
+<p class="p2"><input type="text"/> <span>focusout fire</span></p>
+<p class="p2"><input type="password"/> <span>focusout fire</span></p>
+
+<h4>focusout( )</h4>
+<p class="p3"><input type="text"/> <span>focusout fire</span></p>
+<p class="p3"><input type="password"/> <span>focusout fire</span></p>
+
+
+<h2>mousexxxxx相关事件：</h2>
+<button id="login">nihao</button>
+<h3 id="mousedown">我是mousedown</h3>
+<h3 id="mouseenter">我是mouseenter</h3>
+<h3 id="mouseleave">我是mouseleave</h3>
+<h3 id="mousemove">我是mousemove</h3>
+<h3 id="mouseout">我是mouseout</h3>
+<h3 id="mouseover">我是mouseover</h3>
+<h3 id="mouseup">我是mouseup</h3>
+<h3 id="mouseentermouseleave">我是mouseenter和mouseleave的结合使用</h3>
+<h3 id="mousedownmouseup">我是mousedown和mouseup的结合使用</h3>
+
+
+<h2>点击事件：</h2>
+<button id="btn2">我是click</button>
+<button id="btn3">我是dblclick</button>
+
+<h2>窗口事件</h2>
+<span id="s1">x</span>
+
+<h2>滚动事件</h2>
+<span id="s2">y</span>
+
+<h2>选中事件</h2>
+<input type="text" id="i1" value="asdfghjkl;">
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#p1').hover(
+            function () {
+                $(this).css({
+                    width: "600px",
+                    height: "50px",
+                    fontsize: "46px",
+                    backgroundColor: "red",
+                    marginTop: "60px"
+                });
+                $(this).text("你是猪");
+            },
+            function () {
+                $(this).css({
+                    width: "500px",
+                    height: "40px",
+                    fontsize: "40px",
+                    backgroundColor: "blue",
+                    marginTop: "200px"
+                });
+                $(this).text("把鼠标移过来，看看会有什么变化");
+            }
+        );
+
+        //失去焦点触发的事件
+        $(".blur").blur(function () {
+            $('button[class="blur"]').css("backgroundColor", "red");
+            $('input[class="blur"]').css("backgroundColor", "blue");
+        });
+
+        $(".change").change(function () {
+            $('button[class="change"]').css("backgroundColor", "red");
+            $('input[class="change"]').css("backgroundColor", "blue");
+        });
+
+        //页面加载后为#id为btn4的元素设置焦点
+        $("#btn4").focus();
+
+        //使人无法使用文本框
+        $("input[type=number]").focus(function () {
+            this.blur();
+        });
+
+        //获得焦点触发事件，这跟focus事件区别在于，他可以在父元素上检测子元素获取焦点的情况
+        $(".p2").focusin(function () {
+            $(this).find("span").css('display', 'inline').fadeOut(1000);
+        });
+
+        //失去焦点触发事件，这跟blur事件区别在于，他可以在父元素上检测子元素失去焦点的情况。
+        $(".p3").focusout(function () {
+            $(this).find("span").css('display', 'inline').fadeOut(1000);
+        });
+
+
+        $("#login").mousedown(function () {
+            $(this).css({width: "400px"});
+        }).mouseup(function () {
+            $(this).css({width: "300px"});
+        });
+
+        //按下鼠标触发的函数
+        $("#mousedown").mousedown(function () {
+            $(this).css({backgroundColor: "pink"});
+        });
+
+        //鼠标指针穿过触发函数
+        $("#mouseenter").mouseenter(function () {
+            $(this).css({backgroundColor: "red"});
+        });
+
+        //鼠标指针离开触发函数
+        $("#mouseleave").mouseleave(function () {
+            $(this).css({backgroundColor: "orange"});
+        });
+        $("#mousemove").mousemove(function () {
+            $(this).css({backgroundColor: "yellow"});
+        });
+        $("#mouseout").mouseout(function () {
+            $(this).css({backgroundColor: "green"});
+        });
+        $("#mouseover").mouseover(function () {
+            $(this).css({backgroundColor: "skyblue"});
+        });
+        $("#mouseup").mouseup(function () {
+            $(this).css({backgroundColor: "blue"});
+        });
+
+        //鼠标移入和移除触发事件
+        $("#mouseentermouseleave").mouseenter(function () {
+            $(this).css({backgroundColor: "#EE9AE5"});
+        }).mouseleave(function () {
+            $(this).css({backgroundColor: "#5961F9"});
+        });
+
+        //鼠标点击下和松开鼠标键触发事件，混合使用
+        $("#mousedownmouseup").mousedown(function () {
+            $(this).css({backgroundColor: "#FFD3A5"});
+        }).mouseup(function () {
+            $(this).css({backgroundColor: "#FD6585"});
+        });
+
+        //鼠标单击触发事件
+        $("#btn2").click(function () {
+            $(this).css({backgroundColor: "red"})
+        })
+
+        //鼠标双击触发事件
+        $("#btn3").dblclick(function () {
+            $(this).css({backgroundColor: "green"})
+
+        })
+
+
+        //文档窗口大小改变时触发
+        var x = $("#id").text();
+        x = Number(x);
+        console.log(typeof x);
+        $(window).resize(function () {
+            $('#s1').text(x += 1);
+        });
+
+        var y = $("#id").text();
+        y = Number(x);
+        console.log(typeof y);
+        $(window).scroll(function () {
+            $('#s2').text(y += 1);
+        });
+
+        $("#i1").select(function () {
+            alert("禁止复制");
+        });
+
+        $(window).unload(function () {
+            alert("Bye now!");
+        });
+
+    });
+</script>
+</body>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-3.4.1.js"></script>
+    <style>
+
+        body{
+            margin: 20px;
+        }
+
+        button {
+            height: 60px;
+            width: 300px;
+            border-radius: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+<h2>on()</h2>
+<button id="btn1">先点我看看</button>
+
+
+<h2>off()</h2>
+<button id="btn2">点我后再点上面的那个试试效果</button>
+
+
+<h2>bind()与unbind()类似上面的两个方法</h2>
+<p>
+    &nbsp; !!!不推荐使用！！！<br><br>
+</p>
+
+
+<h2>one()</h2>
+<button id="btn3">我是一个只能执行一次事件的按钮</button>
+
+
+<h2>trigger()与triggerHandler()</h2>
+<p><input type="text" id="ipt1"></p>
+<button id="old">我是old</button>
+<p><input type="text" id="ipt2"></p>
+<button id="new">我是new</button>
+<p><input type="text" id="ipt3"></p>
+
+
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+
+        //on()方法可以为选择元素绑定多个事件
+        $("#btn1").on("click mouseenter mouseleave", function () {
+
+            var r = 0, g = 0, b = 0;
+            r = Math.round(Math.random() * 254) + 1;
+            g = Math.round(Math.random() * 254) + 1;
+            b = Math.round(Math.random() * 254) + 1;
+            var input_color1 = "rgba(" + r + "," + g + "," + b + ",50%)";
+            console.log(input_color1);
+
+            $("body").css("backgroundColor", input_color1);
+        });
+
+
+        //off()方法可以取消元素绑定的事件
+        $("#btn2").on("click", function () {
+            $("#btn1").off("click");
+        })
+
+
+        //bind()方法：
+        /*
+        on多了一个选择器。<br>
+        on可以指定具体的子元素，bind不可以<br>
+        on可以绑定没有页面渲染时不存在的dom，bind不可以<br>
+        on是jquery推荐使用的，bind是从某个版本开始就不推荐使用的
+        */
+
+
+        //one()方法可以绑定
+        $("#btn3").one("click", function () {
+            alert("你真丑");
+        })
+
+        $( "#old" ).click(function() {
+            $( "input" ).trigger( "focus" );
+        });
+        $( "#new" ).click(function() {
+            $( "input" ).triggerHandler( "focus" );
+        });
+        $( "input" ).focus(function() {
+            $( "<span>Focused!</span>" ).appendTo( "body" ).fadeOut( 1000 );
+        });
+
+
+        //trigger()与triggerHandler()区别
+        /*
+        	它不会引起事件（比如表单提交）的默认行为
+        	trigger() 会操作 jQuery 对象匹配的所有元素，而 .triggerHandler() 只影响第一个匹配元素。
+        	triggerHandler() 创建的事件不会在 DOM 树中冒泡；如果目标元素不直接处理它们，则不会发生任何事情。
+        */
+        $( "#old" ).click(function() {
+			$( "#ipt1" ).trigger( "focus" );
+		});
+		$( "#new" ).click(function() {
+			$( "#ipt2" ).triggerHandler( "focus" );
+		});
+		$( "#ipt4" ).focus(function() {
+			$( "<span>Focused!</span>" ).appendTo( "body" ).fadeOut( 1000 );
+		});
+
+
+	
+
+	
+
+
+    });
+
+</script>
+
+</body>
+</html>
